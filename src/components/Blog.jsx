@@ -30,7 +30,7 @@ const Blog = ({ blog, updateBlog }) => {
     return (
       <div className="blog">
         <p>{blog.title} {blog.author}<button onClick={() => setBlogVisible(false)}>hide</button></p>
-        <p>{blog.url}</p>
+        <a href={blog.url}>{blog.url}</a>
         <p>{blog.likes} <button onClick={() => updateBlog(blog.id, updatedBlog)}>like</button></p>
         <p>{blog.user.name}</p>
       </div>
