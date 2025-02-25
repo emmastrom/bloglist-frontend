@@ -44,9 +44,7 @@ const App = () => {
   const updateBlog = (id, blogObject) => {
     blogService
       .update(id, blogObject)
-      .then((returnedBlog) => {
-        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      })
+        .then(setBlogs(blogs.map(blog => blog.id !== id ? blog : blogObject)))
   }
 
   const handleLogin = async (event) => {

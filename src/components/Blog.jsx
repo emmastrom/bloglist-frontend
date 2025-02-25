@@ -2,13 +2,19 @@ import { useState } from "react"
 
 const Blog = ({ blog, updateBlog }) => {
   const [blogVisible, setBlogVisible] = useState(false)
+  const userInfo = {
+    username: blog.user.username,
+    name: blog.user.name,
+    id: blog.user.id
+  }
 
   const updatedBlog = {
+    id: blog.id,
     title: blog.title,
     author: blog.author,
     url: blog.url,
     likes: blog.likes + 1,
-    user: blog.user.id
+    user: userInfo
   }
 
   if (blogVisible === false) {
