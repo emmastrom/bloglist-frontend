@@ -1,20 +1,20 @@
 const Notification = ({ message }) => {
-    if (message === null) {
-      return null
-    }
-  
-    if (message.includes('error')) {
-        return (
-            <div className="error">
-                {message}
-            </div>
-        )
-    }
+  if (message === null) {
+    return null
+  }
+
+  if (message.includes('error')) {
     return (
-      <div className="notification">
+      <div className="error">
         {message}
       </div>
     )
   }
-  
-  export default Notification
+  return (
+    <div className="notification">
+      {message}
+    </div>
+  )
+}
+
+export default Notification

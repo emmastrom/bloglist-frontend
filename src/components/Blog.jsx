@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
   const [blogVisible, setBlogVisible] = useState(false)
@@ -20,9 +20,9 @@ const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
   if (blogVisible === false) {
     return (
       <div className="blog">
-      {blog.title} {blog.author}
-      <button onClick={() => setBlogVisible(true)}>view</button>
-    </div>  
+        {blog.title} {blog.author}
+        <button onClick={() => setBlogVisible(true)}>view</button>
+      </div>
     )
   }
 
@@ -34,7 +34,7 @@ const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
         <p>{blog.likes} <button onClick={() => updateBlog(blog.id, updatedBlog)}>like</button></p>
         <p>{blog.user.name}</p>
         <p>{blog.user.username === currentUser.username ?
-        <button onClick={() => deleteBlog(blog.id, blog.title)}>remove</button> : null}</p>
+          <button onClick={() => deleteBlog(blog.id, blog.title)}>remove</button> : null}</p>
       </div>
     )
   }

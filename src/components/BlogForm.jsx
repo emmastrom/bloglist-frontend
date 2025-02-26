@@ -1,16 +1,17 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const BlogForm = ({ createBlog }) => {
-    const [newTitle, setNewTitle] = useState('')
-    const [newAuthor, setNewAuthor] = useState('')
-    const [newUrl, setNewUrl] = useState('')
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
 
   const addBlog = (event) => {
     event.preventDefault()
     createBlog({
-        title: newTitle,
-        author: newAuthor,
-        url: newUrl,
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl,
     })
 
     setNewTitle('')
@@ -19,41 +20,45 @@ const BlogForm = ({ createBlog }) => {
 
   }
 
-    return (
+  return (
+    <div>
+      <h2>create new blog</h2>
+      <form onSubmit={addBlog}>
         <div>
-        <h2>create new blog</h2>
-        <form onSubmit={addBlog}>
-            <div>
             title:
-            <input
+          <input
             type="text"
             value={newTitle}
             name="Title"
             onChange={event => setNewTitle(event.target.value)}
-            />
-            </div>
-            <div>
+          />
+        </div>
+        <div>
             author:
-            <input
+          <input
             type="text"
             value={newAuthor}
             name="Author"
             onChange={event => setNewAuthor(event.target.value)}
-            />
-            </div>
-            <div>
+          />
+        </div>
+        <div>
             url:
-            <input
+          <input
             type="text"
             value={newUrl}
             name="URL"
             onChange={event => setNewUrl(event.target.value)}
-            />
-            </div>
-            <button type="submit">create</button>
-        </form>
+          />
         </div>
-    )
+        <button type="submit">create</button>
+      </form>
+    </div>
+  )
+}
+
+BlogForm.propTypes = {
+  createBlog: PropTypes.func.isRequired
 }
 
 export default BlogForm
