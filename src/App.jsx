@@ -48,16 +48,22 @@ const App = () => {
   }
 
   const deleteBlog = (id, name) => {
-    if (window.confirm(`Remove blog ${name}?`))
-      blogService
-        .remove(id)
-    setBlogs(blogs.filter(blog => blog.id !== id))
-    setNotificationMessage('blog deleted')
-    setTimeout(() => {
-      setNotificationMessage(null)
-    }, 5000)
-
-  }
+    if (window.confirm(`Remove blog ${name}?`)) {
+      try {
+        blogService
+          .remove(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+      setNotificationMessage('blog deleted')
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+    } catch (exception) {
+      setNotificationMessage('error: could not delete blog')
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+    }
+    }}
 
   const handleLogin = async (event) => {
     event.preventDefault()
