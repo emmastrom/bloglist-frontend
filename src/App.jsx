@@ -34,7 +34,7 @@ const App = () => {
       .create(blogObject)
         .then(returnedBlog => {
           setBlogs(blogs.concat(returnedBlog))
-          setNotificationMessage(`new blog added`)
+          setNotificationMessage(`new blog ${returnedBlog.title} added`)
           setTimeout(() => {
             setNotificationMessage(null)
           }, 5000)
@@ -45,6 +45,18 @@ const App = () => {
     blogService
       .update(id, blogObject)
         .then(setBlogs(blogs.map(blog => blog.id !== id ? blog : blogObject)))
+  }
+
+  const deleteBlog = (id, name) => {
+    if (window.confirm(`Remove blog ${name}?`))
+    blogService
+      .remove(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+      setNotificationMessage('blog deleted')
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+
   }
 
   const handleLogin = async (event) => {
@@ -118,7 +130,7 @@ const App = () => {
         <BlogForm createBlog={addBlog}/>
         </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} />
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} currentUser={user} deleteBlog={deleteBlog} />
       )}
     </div>
   )
