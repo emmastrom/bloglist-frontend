@@ -33,7 +33,7 @@ const App = () => {
     blogService
       .create(blogObject)
       .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
+        setBlogs([returnedBlog].concat(blogs))
         setNotificationMessage(`new blog ${returnedBlog.title} added`)
         setTimeout(() => {
           setNotificationMessage(null)
@@ -130,7 +130,7 @@ const App = () => {
         <BlogForm createBlog={addBlog}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} currentUser={user} deleteBlog={deleteBlog} />
+        <Blog className="blog" key={blog.id} blog={blog} updateBlog={updateBlog} currentUser={user} deleteBlog={deleteBlog} />
       )}
     </div>
   )

@@ -30,9 +30,9 @@ const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
     return (
       <div className="blog">
         <p>{blog.title} {blog.author}<button onClick={() => setBlogVisible(false)}>hide</button></p>
-        <a href={blog.url}>{blog.url}</a>
-        <p>{blog.likes} <button onClick={() => updateBlog(blog.id, updatedBlog)}>like</button></p>
-        <p>{blog.user.name}</p>
+        <a className='blog-url' href={blog.url}>{blog.url}</a>
+        <p className='blog-likes'>{blog.likes} <button onClick={() => updateBlog(blog.id, updatedBlog)}>like</button></p>
+        <p className='blog-creator'>{blog.user.name}</p>
         <p>{blog.user.username === currentUser.username ?
           <button onClick={() => deleteBlog(blog.id, blog.title)}>remove</button> : null}</p>
       </div>
