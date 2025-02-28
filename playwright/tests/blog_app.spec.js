@@ -15,8 +15,27 @@ describe('Blog app', () => {
   })
 
   test('Login form is shown', async ({ page }) => {
-    await page.goto('/')
-
     await expect(page.getByText('Log in to application')).toBeVisible()
+  })
+
+  describe('Login', () => {
+    test('succeeds with correct credentials', async ({ page }) => {
+      await page.getByTestId('username').fill('mluukkai')
+      await page.getByTestId('password').fill('salainen')
+
+      await page.getByRole('button', { name: 'login' }).click()
+
+      await expect(page.getByText('Matti Luukkainen logged in')).toBeVisible()
+    })
+
+    test('fails with wrong credentials', async ({ page }) => {
+      await page.getByTestId('username').fill('mluukkai')
+      await page.getByTestId('password').fill('salai')
+
+      await page.getByRole('button', { name: 'login' }).click()
+
+      await expect(page.getByText('error: wrong username or password')).toBeVisible()
+      await expect(page.getByText('Matti Luukkainen logged in')).not.toBeVisible()
+    })
   })
 })
