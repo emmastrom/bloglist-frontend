@@ -52,17 +52,17 @@ const App = () => {
       try {
         blogService
           .remove(id)
-      setBlogs(blogs.filter(blog => blog.id !== id))
-      setNotificationMessage('blog deleted')
-      setTimeout(() => {
-        setNotificationMessage(null)
-      }, 5000)
-    } catch (exception) {
-      setNotificationMessage('error: could not delete blog')
-      setTimeout(() => {
-        setNotificationMessage(null)
-      }, 5000)
-    }
+        setBlogs(blogs.filter(blog => blog.id !== id))
+        setNotificationMessage('blog deleted')
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      } catch (exception) {
+        setNotificationMessage('error: could not delete blog')
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      }
     }}
 
   const handleLogin = async (event) => {

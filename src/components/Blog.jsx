@@ -37,8 +37,7 @@ const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
               updateBlog(blog.id, updatedBlog)
             } catch (exception) {
               return exception
-            }}
-            }>like</button></p>
+            }}}>like</button></p>
         <p className='blog-creator'>{blog.user.name}</p>
         <p>{blog.user.username === currentUser.username ?
           <button onClick={() => deleteBlog(blog.id, blog.title)}>remove</button> : null}</p>
