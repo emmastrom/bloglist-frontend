@@ -1,4 +1,5 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
+const { loginWith, createNote, createBlog } = require('./helper')
 
 describe('Blog app', () => {
   beforeEach(async ({ page, request }) => {
@@ -42,10 +43,7 @@ describe('Blog app', () => {
 
   describe('When logged in', () => {
     beforeEach(async ({ page, request }) => {
-      await page.getByTestId('username').fill('testUser')
-      await page.getByTestId('password').fill('SuperTests')
-
-      await page.getByRole('button', { name: 'login' }).click()
+      await loginWith(page, 'testUser', 'SuperTests')
       await request.post('/api/login', {
         data: {
           username: 'testUser',
@@ -68,6 +66,17 @@ describe('Blog app', () => {
       const notificationDiv = await page.locator('.notification')
       await expect(notificationDiv).toContainText('new blog testing blog added')
       await expect(page.getByText('testing blog')).toBeVisible
+    })
+
+    test('a blog can be liked', async ({ page, request }) => {
+      await createBlog(page, 'testing again', 'Newt Estman', 'www.test.new')
+      await expect(page.getByText('testing again Newt Estman')).toBeVisible()
+      await page.getByRole('button', { name: 'view' }).click()
+      const initialLikes = await page.locator('.blog-likes')
+      await expect(initialLikes).toContainText('0')
+      await page.getByRole('button', { name: 'like' }).click()
+      const likesAfterClick = await page.locator('.blog-likes')
+      await expect(likesAfterClick).toContainText('1')
     })
   })
 
