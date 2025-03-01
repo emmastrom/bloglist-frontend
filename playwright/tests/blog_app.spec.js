@@ -63,20 +63,32 @@ describe('Blog app', () => {
       await page.getByTestId('url-textbox').fill('www.test.form')
 
       await page.getByRole('button', { name: 'create' }).click()
-      const notificationDiv = await page.locator('.notification')
+      const notificationDiv = page.locator('.notification')
       await expect(notificationDiv).toContainText('new blog testing blog added')
       await expect(page.getByText('testing blog')).toBeVisible
     })
 
-    test('a blog can be liked', async ({ page, request }) => {
+    test('a blog can be liked', async ({ page }) => {
       await createBlog(page, 'testing again', 'Newt Estman', 'www.test.new')
       await expect(page.getByText('testing again Newt Estman')).toBeVisible()
       await page.getByRole('button', { name: 'view' }).click()
       const initialLikes = await page.locator('.blog-likes')
       await expect(initialLikes).toContainText('0')
       await page.getByRole('button', { name: 'like' }).click()
-      const likesAfterClick = await page.locator('.blog-likes')
+      const likesAfterClick = page.locator('.blog-likes')
       await expect(likesAfterClick).toContainText('1')
+    })
+
+    test('a blog can be deleted', async ( { page }) => {
+      await createBlog(page, 'testing again', 'Newt Estman', 'www.test.new')
+      await expect(page.getByText('testing again Newt Estman')).toBeVisible()
+      await page.reload()
+      await page.getByRole('button', { name: 'view' }).click()
+      page.on('dialog', dialog => dialog.accept())
+      await page.getByRole('button', { name: 'remove' }).click()
+      const notificationDiv = page.locator('.notification')
+      await notificationDiv.getByText('blog deleted').waitFor()
+      await expect(page.getByText('testing again Newt Estman')).not.toBeVisible()
     })
   })
 
