@@ -107,6 +107,25 @@ describe('Blog app', () => {
       await expect(page.getByText('www.test.new')).toBeVisible()
       await expect(page.getByRole('button', { name: 'remove' })).not.toBeVisible()
     })
+
+    test('blogs are in order from most to least likes', async ({ page }) => {
+      await createBlog(page, 'testing again', 'Newt Estman', 'www.test.new')
+      await createBlog(page, 'Create', 'Clair Eaton', 'www.creator.com')
+      await createBlog(page, 'Computers', 'C. Prompter', 'www.comp.ter')
+      // Likes blog: Computers
+      await page.getByRole('button', { name: 'view' }).nth(0).click()
+      await page.getByRole('button', { name: 'like' }).click()
+      await page.getByRole('button', { name: 'like' }).click()
+      await page.getByRole('button', { name: 'hide' }).click()
+      //Likes blog: testing again
+      await page.getByRole('button', { name: 'view' }).nth(2).click()
+      await page.getByRole('button', { name: 'like' }).click()
+      await page.reload()
+      await page.getByText('testing again Newt Estman').waitFor()
+      const blogs = page.locator('.blog-info')
+      const expectedBlogs = [ 'Computers C. Prompter', 'testing again Newt Estman', 'Create Clair Eaton']
+      expect(blogs).toContainText(expectedBlogs)
+    })
   })
 
 })
