@@ -11,6 +11,13 @@ describe('Blog app', () => {
         password: 'SuperTests'
       }
     })
+    await request.post('/api/users', {
+      data: {
+        username: 'secondUser',
+        name: 'second',
+        password: 'moreTests'
+      }
+    })
 
     await page.goto('http://localhost:5173')
   })
@@ -89,6 +96,16 @@ describe('Blog app', () => {
       const notificationDiv = page.locator('.notification')
       await notificationDiv.getByText('blog deleted').waitFor()
       await expect(page.getByText('testing again Newt Estman')).not.toBeVisible()
+    })
+
+    test('remove button is not seen if logged in is not the creator', async ({ page }) => {
+      await createBlog(page, 'testing again', 'Newt Estman', 'www.test.new')
+      await page.getByRole('button', { name: 'logout' }).click()
+      await loginWith(page, 'secondUser', 'moreTests')
+      await expect(page.getByText('second logged in')).toBeVisible()
+      await page.getByRole('button', { name: 'view' }).click()
+      await expect(page.getByText('www.test.new')).toBeVisible()
+      await expect(page.getByRole('button', { name: 'remove' })).not.toBeVisible()
     })
   })
 
