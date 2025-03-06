@@ -5,10 +5,12 @@ import BlogForm from './components/BlogForm'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
+    const dispatch = useDispatch()
     const [blogs, setBlogs] = useState([])
-    const [notificationMessage, setNotificationMessage] = useState(null)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState(null)
@@ -30,9 +32,9 @@ const App = () => {
         blogFormRef.current.toggleVisibility()
         blogService.create(blogObject).then((returnedBlog) => {
             setBlogs([returnedBlog].concat(blogs))
-            setNotificationMessage(`new blog ${returnedBlog.title} added`)
+            dispatch(setNotification(`new blog ${returnedBlog.title} added`))
             setTimeout(() => {
-                setNotificationMessage(null)
+                dispatch(setNotification(''))
             }, 5000)
         })
     }
@@ -52,14 +54,14 @@ const App = () => {
             try {
                 blogService.remove(id)
                 setBlogs(blogs.filter((blog) => blog.id !== id))
-                setNotificationMessage('blog deleted')
+                dispatch(setNotification('blog deleted'))
                 setTimeout(() => {
-                    setNotificationMessage(null)
+                    dispatch(setNotification(''))
                 }, 5000)
             } catch (exception) {
-                setNotificationMessage('error: could not delete blog')
+                dispatch(setNotification('error: could not delete blog'))
                 setTimeout(() => {
-                    setNotificationMessage(null)
+                    dispatch(setNotification(''))
                 }, 5000)
             }
         }
@@ -82,9 +84,9 @@ const App = () => {
             setUsername('')
             setPassword('')
         } catch (exception) {
-            setNotificationMessage('error: wrong username or password')
+            dispatch(setNotification('error: wrong username or password'))
             setTimeout(() => {
-                setNotificationMessage(null)
+                dispatch(setNotification(''))
             }, 5000)
         }
     }
@@ -100,7 +102,7 @@ const App = () => {
         return (
             <div>
                 <h2>Log in to application</h2>
-                <Notification message={notificationMessage} />
+                <Notification />
                 <form onSubmit={handleLogin}>
                     <div>
                         username
@@ -131,7 +133,7 @@ const App = () => {
     return (
         <div>
             <h2>blogs</h2>
-            <Notification message={notificationMessage} />
+            <Notification />
             <p>
                 {user.name} logged in
                 <button onClick={handleLogout}>logout</button>
