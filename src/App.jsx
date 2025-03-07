@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/loginReducer'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import Users from './components/Users'
+import { initializeUsers } from './reducers/userReducer'
 
 const App = () => {
     const blogs = useSelector((state) => {
@@ -21,6 +24,10 @@ const App = () => {
 
     useEffect(() => {
         dispatch(initializeBlogs())
+    }, [dispatch])
+
+    useEffect(() => {
+        dispatch(initializeUsers())
     }, [dispatch])
 
     useEffect(() => {
@@ -93,24 +100,29 @@ const App = () => {
     }
 
     return (
-        <div>
-            <h2>blogs</h2>
-            <Notification />
-            <p>
-                {user.name} logged in
-                <button onClick={handleLogout}>logout</button>
-            </p>
-            <Togglable buttonLabel="new blog" ref={blogFormRef}>
-                <BlogForm />
-            </Togglable>
+        <Router>
+            <Routes>
+                <Route path="/users" element={<Users />} />
+            </Routes>
             <div>
-                {[...blogs]
-                    .sort((a, b) => b.likes - a.likes)
-                    .map((blog) => (
-                        <Blog key={blog.id} user={user} blog={blog} />
-                    ))}
+                <h2>blogs</h2>
+                <Notification />
+                <p>
+                    {user.name} logged in
+                    <button onClick={handleLogout}>logout</button>
+                </p>
+                <Togglable buttonLabel="new blog" ref={blogFormRef}>
+                    <BlogForm />
+                </Togglable>
+                <div>
+                    {[...blogs]
+                        .sort((a, b) => b.likes - a.likes)
+                        .map((blog) => (
+                            <Blog key={blog.id} user={user} blog={blog} />
+                        ))}
+                </div>
             </div>
-        </div>
+        </Router>
     )
 }
 
