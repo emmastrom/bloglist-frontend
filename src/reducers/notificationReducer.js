@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const notificationSlicer = createSlice({
+const notificationSlice = createSlice({
     name: 'notification',
     initialState: '',
     reducers: {
@@ -10,7 +10,7 @@ const notificationSlicer = createSlice({
     },
 })
 
-export const { showNotification } = notificationSlicer.actions
+export const { showNotification } = notificationSlice.actions
 
 export const setNotification = (message) => {
     return async (dispatch) => {
@@ -21,4 +21,4 @@ export const setNotification = (message) => {
     }
 }
 
-export default notificationSlicer.reducer
+export default notificationSlice.reducer

@@ -8,15 +8,16 @@ import loginService from './services/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
-//NEXT UP 7.13
+import { setUser } from './reducers/loginReducer'
+
 const App = () => {
     const blogs = useSelector((state) => {
         return state.blogs
     })
     const dispatch = useDispatch()
+    const user = useSelector((state) => state.user)
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [user, setUser] = useState(null)
 
     useEffect(() => {
         dispatch(initializeBlogs())
@@ -24,12 +25,12 @@ const App = () => {
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-        if (loggedUserJSON) {
+        if (loggedUserJSON && loggedUserJSON !== 'null') {
             const user = JSON.parse(loggedUserJSON)
-            setUser(user)
+            dispatch(setUser(user))
             blogService.setToken(user.token)
         }
-    }, [])
+    }, [dispatch])
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -39,12 +40,12 @@ const App = () => {
                 username,
                 password,
             })
+            dispatch(setUser(user))
             window.localStorage.setItem(
                 'loggedBlogappUser',
                 JSON.stringify(user)
             )
             blogService.setToken(user.token)
-            setUser(user)
             setUsername('')
             setPassword('')
         } catch (exception) {
@@ -54,7 +55,7 @@ const App = () => {
 
     const handleLogout = () => {
         window.localStorage.removeItem('loggedBlogappUser')
-        setUser(null)
+        dispatch(setUser(null))
     }
 
     const blogFormRef = useRef()
