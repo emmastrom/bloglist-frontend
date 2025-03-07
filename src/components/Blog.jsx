@@ -1,66 +1,46 @@
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { likeBlog } from '../reducers/blogReducer'
+import { useParams } from 'react-router-dom'
 
-const Blog = ({ user, blog }) => {
+const Blog = () => {
     const dispatch = useDispatch()
+    const blogs = useSelector((state) => state.blogs)
+    console.log(blogs)
+    const id = useParams().id
+    console.log(id)
+    const blog = blogs.find((b) => b.id === id)
+    console.log(blog)
 
-    const [blogVisible, setBlogVisible] = useState(false)
-
-    if (blogVisible === false) {
-        return (
-            <div className="blog-info">
-                <div>
-                    {blog.title} {blog.author}
-                </div>
-                <div>
-                    <button onClick={() => setBlogVisible(true)}>view</button>
-                </div>
-            </div>
-        )
+    if (!blog) {
+        return null
     }
 
-    if (blogVisible === true) {
-        return (
-            <div className="blog-info">
-                <p>
-                    {blog.title} {blog.author}
-                    <button
-                        className="clickView"
-                        onClick={() => setBlogVisible(false)}
-                    >
-                        hide
-                    </button>
-                </p>
-                <a className="blog-url" href={blog.url}>
-                    {blog.url}
-                </a>
-                <p className="blog-likes">
-                    {blog.likes}{' '}
-                    <button
-                        className="clickLikes"
-                        onClick={() => {
-                            try {
-                                dispatch(likeBlog(blog))
-                            } catch (exception) {
-                                return exception
-                            }
-                        }}
-                    >
-                        like
-                    </button>
-                </p>
-                <p className="blog-creator">{blog.user.name}</p>
-                <p>
-                    {blog.user.username === user.username ? (
-                        <button onClick={() => dispatch(deleteBlog(blog))}>
-                            remove
-                        </button>
-                    ) : null}
-                </p>
-            </div>
-        )
-    }
+    return (
+        <div className="blog-open">
+            <h2>
+                {blog.title} {blog.author}
+            </h2>
+            <a className="blog-url" href={blog.url}>
+                {blog.url}
+            </a>
+            <p className="blog-likes">
+                {blog.likes} likes{' '}
+                <button
+                    className="clickLikes"
+                    onClick={() => {
+                        try {
+                            dispatch(likeBlog(blog))
+                        } catch (exception) {
+                            return exception
+                        }
+                    }}
+                >
+                    like
+                </button>
+            </p>
+            <p className="blog-creator"> added by {blog.user.name}</p>
+        </div>
+    )
 }
 
 export default Blog

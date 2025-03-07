@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Users from './components/Users'
 import { initializeUsers } from './reducers/userReducer'
 import User from './components/User'
+import BlogList from './components/BlogList'
 
 const App = () => {
     const blogs = useSelector((state) => {
@@ -112,17 +113,9 @@ const App = () => {
                 <Routes>
                     <Route path="/users" element={<Users />} />
                     <Route path="/users/:id" element={<User />} />
+                    <Route path="/blogs/:id" element={<Blog />} />
+                    <Route path="/" element={<BlogList />} />
                 </Routes>
-                <Togglable buttonLabel="new blog" ref={blogFormRef}>
-                    <BlogForm />
-                </Togglable>
-                <div>
-                    {[...blogs]
-                        .sort((a, b) => b.likes - a.likes)
-                        .map((blog) => (
-                            <Blog key={blog.id} user={user} blog={blog} />
-                        ))}
-                </div>
             </div>
         </Router>
     )
