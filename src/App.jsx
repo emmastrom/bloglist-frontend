@@ -12,6 +12,7 @@ import { setUser } from './reducers/loginReducer'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Users from './components/Users'
 import { initializeUsers } from './reducers/userReducer'
+import User from './components/User'
 
 const App = () => {
     const blogs = useSelector((state) => {
@@ -101,9 +102,6 @@ const App = () => {
 
     return (
         <Router>
-            <Routes>
-                <Route path="/users" element={<Users />} />
-            </Routes>
             <div>
                 <h2>blogs</h2>
                 <Notification />
@@ -111,6 +109,10 @@ const App = () => {
                     {user.name} logged in
                     <button onClick={handleLogout}>logout</button>
                 </p>
+                <Routes>
+                    <Route path="/users" element={<Users />} />
+                    <Route path="/users/:id" element={<User />} />
+                </Routes>
                 <Togglable buttonLabel="new blog" ref={blogFormRef}>
                     <BlogForm />
                 </Togglable>
