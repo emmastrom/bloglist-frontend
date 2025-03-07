@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog } from '../reducers/blogReducer'
 import { useParams } from 'react-router-dom'
+import Comments from './Comments'
 
 const Blog = () => {
     const dispatch = useDispatch()
     const blogs = useSelector((state) => state.blogs)
-    console.log(blogs)
+
     const id = useParams().id
-    console.log(id)
     const blog = blogs.find((b) => b.id === id)
-    console.log(blog)
+    console.log(blog.user)
 
     if (!blog) {
         return null
@@ -39,6 +39,7 @@ const Blog = () => {
                 </button>
             </p>
             <p className="blog-creator"> added by {blog.user.name}</p>
+            <Comments blog={blog} />
         </div>
     )
 }

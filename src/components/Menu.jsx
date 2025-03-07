@@ -5,7 +5,7 @@ import { setUser } from '../reducers/loginReducer'
 const Menu = () => {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
-    console.log(user)
+
     const padding = {
         paddingRight: 5,
     }
