@@ -1,27 +1,21 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 
-const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
+const Blog = ({ user, blog }) => {
+    const dispatch = useDispatch()
+
     const [blogVisible, setBlogVisible] = useState(false)
-    const userInfo = {
-        username: blog.user.username,
-        name: blog.user.name,
-        id: blog.user.id,
-    }
-
-    const updatedBlog = {
-        id: blog.id,
-        title: blog.title,
-        author: blog.author,
-        url: blog.url,
-        likes: blog.likes + 1,
-        user: userInfo,
-    }
 
     if (blogVisible === false) {
         return (
             <div className="blog-info">
-                {blog.title} {blog.author}
-                <button onClick={() => setBlogVisible(true)}>view</button>
+                <div>
+                    {blog.title} {blog.author}
+                </div>
+                <div>
+                    <button onClick={() => setBlogVisible(true)}>view</button>
+                </div>
             </div>
         )
     }
@@ -47,7 +41,7 @@ const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
                         className="clickLikes"
                         onClick={() => {
                             try {
-                                updateBlog(blog.id, updatedBlog)
+                                dispatch(likeBlog(blog))
                             } catch (exception) {
                                 return exception
                             }
@@ -58,8 +52,8 @@ const Blog = ({ blog, updateBlog, currentUser, deleteBlog }) => {
                 </p>
                 <p className="blog-creator">{blog.user.name}</p>
                 <p>
-                    {blog.user.username === currentUser.username ? (
-                        <button onClick={() => deleteBlog(blog.id, blog.title)}>
+                    {blog.user.username === user.username ? (
+                        <button onClick={() => dispatch(deleteBlog(blog))}>
                             remove
                         </button>
                     ) : null}

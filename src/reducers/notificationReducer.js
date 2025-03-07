@@ -15,6 +15,9 @@ export const { showNotification } = notificationSlicer.actions
 export const setNotification = (message) => {
     return async (dispatch) => {
         dispatch(showNotification(message))
+        setTimeout(() => {
+            dispatch(showNotification(''))
+        }, 5000)
     }
 }
 

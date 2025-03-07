@@ -1,22 +1,24 @@
-import { useState } from 'react'
-import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import { createBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
 
-const BlogForm = ({ createBlog }) => {
-    const [newTitle, setNewTitle] = useState('')
-    const [newAuthor, setNewAuthor] = useState('')
-    const [newUrl, setNewUrl] = useState('')
+const BlogForm = () => {
+    const dispatch = useDispatch()
 
-    const addBlog = (event) => {
-        event.preventDefault()
-        createBlog({
-            title: newTitle,
-            author: newAuthor,
-            url: newUrl,
-        })
-
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
+    const addBlog = async (event) => {
+        //event.preventDefault()
+        const newBlog = {
+            title: event.target.title.value,
+            author: event.target.author.value,
+            url: event.target.url.value,
+            likes: 0,
+        }
+        event.target.title.value = ''
+        event.target.author.value = ''
+        event.target.url.value = ''
+        console.log(newBlog)
+        dispatch(createBlog(newBlog))
+        //dispatch(setNotification('created new blog'))
     }
 
     return (
@@ -27,9 +29,7 @@ const BlogForm = ({ createBlog }) => {
                     title:
                     <input
                         type="text"
-                        value={newTitle}
-                        name="Title"
-                        onChange={(event) => setNewTitle(event.target.value)}
+                        name="title"
                         id="title-input"
                         data-testid="title-textbox"
                     />
@@ -38,9 +38,7 @@ const BlogForm = ({ createBlog }) => {
                     author:
                     <input
                         type="text"
-                        value={newAuthor}
-                        name="Author"
-                        onChange={(event) => setNewAuthor(event.target.value)}
+                        name="author"
                         id="author-input"
                         data-testid="author-textbox"
                     />
@@ -49,9 +47,7 @@ const BlogForm = ({ createBlog }) => {
                     url:
                     <input
                         type="text"
-                        value={newUrl}
-                        name="URL"
-                        onChange={(event) => setNewUrl(event.target.value)}
+                        name="url"
                         id="url-input"
                         data-testid="url-textbox"
                     />
@@ -60,10 +56,6 @@ const BlogForm = ({ createBlog }) => {
             </form>
         </div>
     )
-}
-
-BlogForm.propTypes = {
-    createBlog: PropTypes.func.isRequired,
 }
 
 export default BlogForm
