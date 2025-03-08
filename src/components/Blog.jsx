@@ -9,7 +9,6 @@ const Blog = () => {
 
     const id = useParams().id
     const blog = blogs.find((b) => b.id === id)
-    console.log(blog.user)
 
     if (!blog) {
         return null
