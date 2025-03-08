@@ -1,6 +1,5 @@
-import { useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { useRef } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Togglable from './Togglable'
 import BlogForm from './BlogForm'
@@ -13,7 +12,7 @@ const BlogList = () => {
     }
     return (
         <div>
-            <h2>blog app</h2>
+            <h2 className="header">blog app</h2>
             <Togglable buttonLabel="new blog" ref={blogFormRef}>
                 <BlogForm />
             </Togglable>
@@ -23,7 +22,7 @@ const BlogList = () => {
                     .map((blog) => (
                         <div key={blog.id} className="blog-info">
                             <div>
-                                <Link to={`/blogs/${blog.id}`}>
+                                <Link className="link" to={`/blogs/${blog.id}`}>
                                     {' '}
                                     {blog.title} {blog.author}
                                 </Link>

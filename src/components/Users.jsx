@@ -6,7 +6,7 @@ const Users = () => {
     console.log(users)
     return (
         <div>
-            <h2>Users</h2>
+            <h2 className="smallHeader">Users</h2>
             <table>
                 <tbody>
                     <tr>
@@ -16,7 +16,7 @@ const Users = () => {
                     {[...users].map((user) => (
                         <tr key={user.id}>
                             <td>
-                                <Link to={`/users/${user.id}`}>
+                                <Link className="user" to={`/users/${user.id}`}>
                                     {user.name}
                                 </Link>
                             </td>

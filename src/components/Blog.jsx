@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { likeBlog } from '../reducers/blogReducer'
 import { useParams } from 'react-router-dom'
 import Comments from './Comments'
+import { setNotification } from '../reducers/notificationReducer'
 
 const Blog = () => {
     const dispatch = useDispatch()
@@ -16,7 +17,7 @@ const Blog = () => {
 
     return (
         <div className="blog-open">
-            <h2>
+            <h2 className="smallHeader">
                 {blog.title} {blog.author}
             </h2>
             <a className="blog-url" href={blog.url}>
@@ -29,6 +30,7 @@ const Blog = () => {
                     onClick={() => {
                         try {
                             dispatch(likeBlog(blog))
+                            dispatch(setNotification(`liked ${blog.title}`))
                         } catch (exception) {
                             return exception
                         }

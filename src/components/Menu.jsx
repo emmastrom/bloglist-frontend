@@ -7,7 +7,7 @@ const Menu = () => {
     const user = useSelector((state) => state.user)
 
     const padding = {
-        paddingRight: 5,
+        marginRight: 15,
     }
     const handleLogout = () => {
         window.localStorage.removeItem('loggedBlogappUser')
@@ -15,14 +15,14 @@ const Menu = () => {
     }
     return (
         <div className="menu">
-            <Link style={padding} to="/">
+            <Link className="link" style={padding} to="/">
                 blogs
             </Link>
-            <Link style={padding} to="/users">
+            <Link className="link" style={padding} to="/users">
                 users
             </Link>
-            {user.name} logged in
-            <button style={padding} onClick={handleLogout}>
+            <a style={padding}>{user.name} logged in</a>
+            <button className="button" onClick={handleLogout}>
                 logout
             </button>
         </div>

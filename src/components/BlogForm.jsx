@@ -6,7 +6,7 @@ const BlogForm = () => {
     const dispatch = useDispatch()
 
     const addBlog = async (event) => {
-        //event.preventDefault()
+        event.preventDefault()
         const newBlog = {
             title: event.target.title.value,
             author: event.target.author.value,
@@ -18,40 +18,53 @@ const BlogForm = () => {
         event.target.url.value = ''
         console.log(newBlog)
         dispatch(createBlog(newBlog))
-        //dispatch(setNotification('created new blog'))
+        dispatch(setNotification('created new blog'))
     }
 
     return (
         <div>
-            <h2>create new blog</h2>
+            <h2 className="smallHeader">create new blog</h2>
             <form onSubmit={addBlog}>
-                <div>
-                    title:
-                    <input
-                        type="text"
-                        name="title"
-                        id="title-input"
-                        data-testid="title-textbox"
-                    />
-                </div>
-                <div>
-                    author:
-                    <input
-                        type="text"
-                        name="author"
-                        id="author-input"
-                        data-testid="author-textbox"
-                    />
-                </div>
-                <div>
-                    url:
-                    <input
-                        type="text"
-                        name="url"
-                        id="url-input"
-                        data-testid="url-textbox"
-                    />
-                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td className="blog-form">
+                                title:
+                                <input
+                                    className="blog-input"
+                                    type="text"
+                                    name="title"
+                                    id="title-input"
+                                    data-testid="title-textbox"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="blog-form">
+                                author:
+                                <input
+                                    className="blog-input"
+                                    type="text"
+                                    name="author"
+                                    id="author-input"
+                                    data-testid="author-textbox"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="blog-form">
+                                url:
+                                <input
+                                    className="blog-input"
+                                    type="text"
+                                    name="url"
+                                    id="url-input"
+                                    data-testid="url-textbox"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <button type="submit">create</button>
             </form>
         </div>

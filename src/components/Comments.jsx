@@ -17,14 +17,18 @@ const Comments = (blog) => {
 
     return (
         <div>
-            <h4>comments</h4>
+            <h4 className="smallHeader">comments</h4>
             <form onSubmit={addComment}>
-                <input type="text" name="newComment"></input>
+                <input
+                    className="comment-input"
+                    type="text"
+                    name="newComment"
+                ></input>
                 <button type="submit">add comment</button>
             </form>
             {blog.blog.comments.map((comment) => (
                 <div key={comment.id}>
-                    <li>{comment.content}</li>
+                    <ul>{comment.content}</ul>
                 </div>
             ))}
         </div>

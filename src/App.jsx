@@ -68,29 +68,43 @@ const App = () => {
     if (user === null) {
         return (
             <div>
-                <h2>Log in to application</h2>
+                <h2 className="header">Log in to application</h2>
                 <Notification />
                 <form onSubmit={handleLogin}>
-                    <div>
-                        username
-                        <input
-                            type="text"
-                            data-testid="username"
-                            value={username}
-                            name="Username"
-                            onChange={({ target }) => setUsername(target.value)}
-                        />
-                    </div>
-                    <div>
-                        password
-                        <input
-                            type="password"
-                            data-testid="password"
-                            value={password}
-                            name="Password"
-                            onChange={({ target }) => setPassword(target.value)}
-                        />
-                    </div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td className="blog-form">
+                                    username:
+                                    <input
+                                        className="blog-input"
+                                        type="text"
+                                        data-testid="username"
+                                        value={username}
+                                        name="Username"
+                                        onChange={({ target }) =>
+                                            setUsername(target.value)
+                                        }
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td className="blog-form">
+                                    password:
+                                    <input
+                                        className="blog-input"
+                                        type="password"
+                                        data-testid="password"
+                                        value={password}
+                                        name="Password"
+                                        onChange={({ target }) =>
+                                            setPassword(target.value)
+                                        }
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <button type="submit">login</button>
                 </form>
             </div>

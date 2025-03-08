@@ -15,11 +15,11 @@ const User = () => {
     return (
         <div>
             <h2>{user.name}</h2>
-            <h4>added blogs</h4>
+            <h4 className="smallHeader">added blogs</h4>
             <div>
                 {[...user.blogs].map((blog) => (
                     <div key={blog.id}>
-                        <li>{blog.title}</li>
+                        <ul>{blog.title}</ul>
                     </div>
                 ))}
             </div>
